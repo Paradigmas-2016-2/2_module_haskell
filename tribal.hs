@@ -1,9 +1,10 @@
 --unit data
 spear_fighter = [10, 15, 45]
-swordsman = [25, 50, 25]
-axeman = [40, 10, 5]
+swordsman     = [25, 50, 25]
+axeman        = [40, 10, 5]
 light_cavalry = [130, 30, 40]
 heavy_cavalry = [150, 200, 80]
+data Winner = Attacker | Defender deriving (Show)  
 
 unit i = [spear_fighter, swordsman, axeman, light_cavalry, heavy_cavalry]!!i
 unit_strength (x:xs) = x
@@ -37,4 +38,12 @@ total_defense xs ys = total_general_defense xs ys + total_cavalry_defense xs ys
 
 --winner data
 --winner loss ratio= (([loser fight value]/[winner fight value])^(1/2)/([winner fight value]/[loser fight value])
-winner_loss_ratio = 
+defense_strength_ratio total_defense total_strength = total_defense / total_strength
+strength_defense_ratio total_defense total_strength = total_strength / total_defense
+
+calculate_winner total_defense total_strength = if total_strength > total_defense then Attacker else Defender
+
+winner_loss_ratio Defender total_defense total_strength = sqrt (strength_defense_ratio total_defense total_strength) / defense_strength_ratio total_defense total_strength
+winner_loss_ratio Attacker total_defense total_strength = sqrt (defense_strength_ratio total_defense total_strength) / strength_defense_ratio total_defense total_strength
+winner_loss_ratio xs xy = winner_loss_ratio (calculate_winner (total_defense xs xy) (total_strength xy)) (total_defense xs xy) (total_strength xy)
+
