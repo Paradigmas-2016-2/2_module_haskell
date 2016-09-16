@@ -16,7 +16,8 @@ module Tribal
  strength_defense_ratio,
  calculate_winner,
  loss_ratio,
- winner_loss_ratio
+ winner_loss_ratio,
+ multiplicate_list
 ) where
 
 --unit data
@@ -96,3 +97,5 @@ loss_ratio Attacker total_defense total_strength = sqrt (defense_strength_ratio 
 winner_loss_ratio :: [Double] -> [Double] -> Double
 winner_loss_ratio xs xy = loss_ratio (calculate_winner (total_defense xs xy) (total_strength xy)) (total_defense xs xy) (total_strength xy)
 
+multiplicate_list :: Double -> [Double] -> [Double]
+multiplicate_list x ys = map (x *) ys
